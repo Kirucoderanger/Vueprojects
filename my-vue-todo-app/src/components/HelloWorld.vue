@@ -1,6 +1,29 @@
 <script setup>
 import { ref } from 'vue';
 import StarRating from "../components/StarRating.vue";
+
+
+const display = ref("");
+
+const buttons = ["7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"];
+
+const pressButton = (btn) => {
+  if (btn === "=") {
+    try {
+      display.value = eval(display.value);
+    } catch (error) {
+      display.value = "Error";
+    }
+  } else {
+    display.value += btn;
+  }
+};
+
+const clearDisplay = () => {
+  display.value = "";
+};
+
+
 const rating = ref(0);
 const newTask = ref('');
 const tasks = ref([]);
@@ -40,6 +63,18 @@ const removeTask = (index) => {
       <StarRating v-model="rating" />
       <p>Your rating: {{ rating }}</p>
     </div>
+    <div class="calculator">
+    <h2>Vue 3 Calculator</h2>
+    <input type="text" v-model="display" readonly />
+
+    <div class="buttons">
+      <button v-for="btn in buttons" :key="btn" @click="pressButton(btn)">
+        {{ btn }}
+      </button>
+    </div>
+
+    <button class="clear" @click="clearDisplay">C</button>
+  </div>
   </div>
   
 </template>
@@ -50,6 +85,14 @@ const removeTask = (index) => {
   max-width: 400px;
   margin: auto;
   text-align: center;
+}
+
+.container input {
+  width: 70%;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 1px;
 }
 .completed {
   text-decoration: line-through;
@@ -63,6 +106,57 @@ li {
   justify-content: space-between;
   padding: 5px;
   border-bottom: 1px solid #ccc;
+}
+</style>
+
+
+<style scoped>
+.calculator {
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 10px;
+  background-color: #f4f4f4;
+}
+
+.calculator input {
+  width: 80%;
+  height: 30px;
+  font-size: 1.5rem;
+  text-align: right;
+  padding: 10px;
+  margin-bottom: 10px;
+  
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.buttons button {
+  font-size: 1.5rem;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #eee;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+.clear {
+  width: 100%;
+  margin-top: 10px;
+  background-color: red;
+  color: white;
 }
 </style>
 
