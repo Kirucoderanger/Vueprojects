@@ -2,6 +2,23 @@
 import { ref } from 'vue';
 import StarRating from "../components/StarRating.vue";
 
+import { defineProps, defineEmits } from 'vue';
+import { onMounted } from 'vue';
+import Popup from '../components/Popup.vue';
+
+const showPopup = ref(false);
+
+onMounted(() => {
+  setTimeout(() => {
+    showPopup.value = true; // Show popup after 2 seconds
+  }, 2000);
+});
+
+const props = defineProps({ isOpen: Boolean });
+const emit = defineEmits(['close']);
+
+const closePopup = () => emit('close');
+
 
 // Reactive state to track whether the sign-up panel is active
 const isSignUp = ref(false);
@@ -138,6 +155,23 @@ const removeTask = (index) => {
         </div>
       </div>
     </div>
+  </div>
+  <div>
+    <Teleport to="body">
+      <Transition name="fade">
+      <div v-if="isOpen" class="popup-overlay" @click.self="closePopup">
+        <div class="popup-content">
+          <p>This is an animated popup!</p>
+          <button @click="closePopup">Close</button>
+        </div>
+      </div>
+    </Transition>
+    <div>
+      <button @click="showPopup = true">Open Popup</button>
+      <Popup :isOpen="showPopup" @close="showPopup = false" />
+    </div>
+  </Teleport>
+
   </div>
 
   </div>
@@ -451,6 +485,7 @@ input {
 	height: 40px;
 	width: 40px;
 }
+
 </style>
 
 
