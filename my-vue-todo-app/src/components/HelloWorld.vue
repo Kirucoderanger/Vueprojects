@@ -84,6 +84,9 @@ const removeTask = (index) => {
 
     <button class="clear" @click="clearDisplay">C</button>
   </div>
+  <div>
+    <h2>Animated-Double-Slider-login-Signup-Form</h2>
+  </div>
 
   <div :class="{ 'right-panel-active': isSignUp }" class="container">
     <!-- Sign Up Form -->
@@ -207,7 +210,7 @@ li {
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  background-color: #eee;
+  background-color: #403a3a;
 }
 
 button:hover {
@@ -240,6 +243,7 @@ body {
 
 h1 {
 	font-weight: bold;
+  font-size: xx-large;
 	margin: 0;
 }
 
